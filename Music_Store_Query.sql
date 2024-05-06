@@ -96,7 +96,7 @@ ORDER BY miliseconds DESC;
 /* Q1: Find how much amount spent by each customer on artists? Write a query to return customer name, artist name and total spent */
 
 /* Steps to Solve: First, find which artist has earned the most according to the InvoiceLines. Now use this artist to find 
-which customer spent the most on this artist. For this query, you will need to use the Invoice, InvoiceLine, Track, Customer, 
+which customer spent the most on this artist. For this query, i will use the Invoice, InvoiceLine, Track, Customer, 
 Album, and Artist tables. Note, this one is tricky because the Total spent in the Invoice table might not be on a single product, 
 so you need to use the InvoiceLine table to find out how many of each product was purchased, and then multiply this by the price
 for each artist. */
@@ -104,7 +104,7 @@ for each artist. */
 WITH best_selling_artist AS (
 	SELECT a.artist_id, a.name, SUM(il.unit_price*il.quantity) AS total_sales
 	FROM artist a
-  INNER JOIN album al ON a.artist_id = al.artist_id
+  	INNER JOIN album al ON a.artist_id = al.artist_id
 	INNER JOIN track t ON al.album_id = t.album_id
 	INNER JOIN invoice_line il ON t.track_id = il.track_id
 	GROUP BY 1,2
@@ -136,7 +136,7 @@ WITH popular_genre AS
     FROM customer c 
 	INNER JOIN invoice i ON c.customer_id = i.customer_id
 	INNER JOIN invoice_line il ON i.invoice_id = il.invoice_id
-  INNER JOIN track t ON il.track_id = t.track_id
+  	INNER JOIN track t ON il.track_id = t.track_id
 	INNER JOIN genre g ON t.genre_id = g..genre_id
 	GROUP BY c.country, g.name, g.genre_id
 	ORDER BY c.country ASC, purchases DESC
